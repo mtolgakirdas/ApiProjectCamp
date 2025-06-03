@@ -13,7 +13,7 @@ namespace ApiProjectCamp.WebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ApiContext _context;
-        public MessagesController(IMapper mapper ,ApiContext context)
+        public MessagesController(IMapper mapper, ApiContext context)
         {
             _mapper = mapper;
             _context = context;
@@ -56,6 +56,13 @@ namespace ApiProjectCamp.WebApi.Controllers
             _context.Messages.Update(value);
             _context.SaveChanges();
             return Ok("Güncelleme işlemi başarılı");
+        }
+
+        [HttpGet("MessageListByIsReadFalse")]
+        public IActionResult MessageListByIsReadFalse()
+        {
+            var value = _context.Messages.Where(x => x.IsRead == false).ToList();
+            return Ok(value);
         }
     }
 }
